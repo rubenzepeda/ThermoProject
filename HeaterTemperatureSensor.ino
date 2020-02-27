@@ -17,17 +17,17 @@ int relay=5;  // Defines relay as pin 5
 int TempLow = 25; // Defines the lower boundary of our range 
 int TempHigh = 26; // Defines the upper boundary of our range 
 
-Adafruit_AM2320 am2320 = Adafruit_AM2320();
+Adafruit_AM2320 am2320 = Adafruit_AM2320();  // Defines temperature sensor using library
 
 void setup() 
 {
-  Serial.begin(9600);
+  Serial.begin(9600);  // Begins communication
   while (!Serial)
   {
-    delay(10); // hang out until serial port opens
+    delay(10); // Waits until serial port opens
   }
-
-  Serial.println("Temperature Readings"); 
+  
+  
   am2320.begin(); // starts the temperature sensor
   pinMode(relay,OUTPUT); // sets relay pin as an OUTPUT
   
@@ -45,10 +45,10 @@ void loop()
   display.setTextSize(1.5);                    // Size of the text
   display.setTextColor(WHITE);                 // Color of the text
   display.setCursor(0,0);                      // Location of the text
-  display.println("Room Temperature:"); 
+  display.println("Room Temperature:");        // prints out message
   display.println(x);                          // prints out the value for room temperature
-  display.println("Heater Status:");
-  display.display();                                         // Update the display
+  display.println("Heater Status:");           // prints out message
+  display.display();                           // Update the display
   
   if (x<TempLow)   // Logical condition to turn on the heater when the temperature goes below the lower value.  
   {
