@@ -12,7 +12,10 @@
 #define OLED_RESET LED_BUILTIN
 Adafruit_SSD1306 display(OLED_RESET);
 
-int relay=5; // Defines pin 5 as the pin for the relay.
+// Define variables
+int relay=5;  // Defines relay as pin 5
+int TempLow = 25; // Defines the lower boundary of our range 
+int TempHigh = 26; // Defines the upper boundary of our range 
 
 Adafruit_AM2320 am2320 = Adafruit_AM2320();
 
@@ -47,14 +50,21 @@ void loop()
   display.println("Heater Status:");
   display.display();                                         // Update the display
   
-  if (x<25)   // Logical condition to turn on the heater 
+  if (x<TempLow)   // Logical condition to turn on the heater when the temperature goes below the lower value.  
+  {
+    digitalWrite(relay,HIGH);
+    display.println("ON");
+    display.display();
+  }
+  
+  elseif (x=>TempLow && x<=TempHigh) // Logical condition to keep the heater on until it hits the upper value for temperature
   {
     digitalWrite(relay,HIGH);
     display.println("ON");
     display.display();
   }
 
-  if (x>=26)   // Logical condition to turn off the heater
+  else // anything above TempHigh will turn the heater off 
     {
     digitalWrite(relay,LOW);
     display.println("OFF");
